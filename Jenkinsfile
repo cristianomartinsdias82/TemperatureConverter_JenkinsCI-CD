@@ -5,7 +5,7 @@ pipeline {
         stage ('Image building') {
             steps {
                 script {
-                    dockerapp = docker.build("cristianomartinsdiasspbr1982/temperature-converter:v${env.BUILD_ID}", '-f ./Dockerfile ./')
+                    dockerapp = docker.build("cristianomartinsdiasspbr1982/temperature-converter:v${env.BUILD_ID}", '-f ./APITemperaturas/Dockerfile ./APITemperaturas')
                 }
             }
         }
