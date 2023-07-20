@@ -1,0 +1,57 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/cristianomartinsdias82/TemperatureConverter_JenkinsCI-CD.git'
+            }
+        }
+        
+        stage('Restore') {
+            steps {
+                // Restoring NuGet packages
+                bat 'dotnet restore'
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                // Building the .NET application
+                bat 'dotnet build -c Release'
+            }
+        }
+        
+        stage('Test') {
+            steps {
+                // Running tests for the ASP.NET Web API application
+                bat 'dotnet test --logger "trx;LogFileName=test-results.trx" --results-directory ./TestResults'
+
+                //dotnet test --collect "XPlat Code Coverage"
+                //reportgenerator -reports:./TestResults/**/coverage.cobertura.xml --reportTypes:Html -targetDir:./TestResults/
+                
+                // Optionally, you can publish the test results to Jenkins
+                step([$class: 'MSTestPublisher', testResultsFile:"**/TestResults/*.trx"])
+            }
+        }
+        
+        stage('Publish') {
+            steps {
+                // Publishing the ASP.NET Web API application
+                bat 'dotnet publish -c Release -o ./publish'
+            }
+        }
+    }
+    
+    post {
+        success {
+            // If the build and tests are successful, you can deploy the application to your desired location here.
+            echo 'Build and test successful! Deploying...'
+            // Add your deployment steps here
+        }
+        failure {
+            echo 'Build or test failed! Deployment aborted.'
+            // Optionally, you can trigger notifications or other actions upon failure
+        }
+    }
+}
