@@ -9,8 +9,8 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1",
         new OpenApiInfo
         {
-            Title = "APITemperaturas",
-            Description = "API de conversão de temperaturas implementada com .NET 7 + Minimal APIs", 
+            Title = "Api de conversão de temperaturas V1",
+            Description = "API de conversão de temperaturas implementada com .NET 7 + Minimal APIs",
             Version = "v1",
             Contact = new OpenApiContact()
             {
@@ -38,7 +38,7 @@ app.MapGet("/ConversorTemperaturas/Fahrenheit/{temperaturaFahrenheit}",
     {
         if (temperaturaFahrenheit < -459.67)
         {
-            app.Logger.LogError($"Valor de temperatura em Fahrenheit inválido 1: {temperaturaFahrenheit}");
+            app.Logger.LogError($"Valor de temperatura em Fahrenheit inválido: {temperaturaFahrenheit}");
             return TypedResults.BadRequest();
         }
         var result = new Temperatura(temperaturaFahrenheit);
