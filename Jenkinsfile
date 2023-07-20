@@ -28,11 +28,11 @@ pipeline {
             }
             steps {
                 script {
-                    //withKubeConfig([credentialsId: 'kubeconfig']) {
+                    withKubeConfig([credentialsId: 'kubeconfig']) {
                     //withKubeConfig() {
                         //sh 'sed -i "s/{{tag}}/$tag_version/g" ./APITemperaturas/k8s/deployment.yaml'
                         sh 'kubectl apply -f ./APITemperaturas/k8s/deployment.yaml'
-                    //}
+                    }
                 }
             }
         }
