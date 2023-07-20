@@ -38,7 +38,7 @@ app.MapGet("/ConversorTemperaturas/Fahrenheit/{temperaturaFahrenheit}",
     {
         if (temperaturaFahrenheit < -459.67)
         {
-            app.Logger.LogError($"Valor de temperatura em Fahrenheit inválido: {temperaturaFahrenheit}");
+            app.Logger.LogError($"Valor de temperatura em Fahrenheit inválido 1: {temperaturaFahrenheit}");
             return TypedResults.BadRequest();
         }
         var result = new Temperatura(temperaturaFahrenheit);
