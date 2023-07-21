@@ -5,8 +5,7 @@ pipeline {
         stage ('Image building') {
             steps {
                 script {
-                    //dockerapp = docker.build("cristianomartinsdiasspbr1982/temperature-converter:v${env.BUILD_ID}", '-f ./APITemperaturas/Dockerfile ./APITemperaturas')
-                    dockerapp = docker.build("cristianomartinsdiasspbr1982/temperature-converter:latest", '-f ./APITemperaturas/Dockerfile ./APITemperaturas')
+                    dockerapp = docker.build("cristianomartinsdiasspbr1982/temperature-converter:${env.BUILD_ID}", '-f ./APITemperaturas/Dockerfile ./APITemperaturas')
                 }
             }
         }
@@ -15,8 +14,8 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                        dockerapp.push('latest')
-                        //dockerapp.push("v${env.BUILD_ID}")
+                        dockerapp.push("${env.BUILD_ID}")
+                        dockerapp.push('latest')                        
                     }
                 }
             }
@@ -29,8 +28,7 @@ pipeline {
             steps {
                 script {
                     withKubeConfig([credentialsId: 'kubeconfig']) {
-                    //withKubeConfig() {
-                        //sh 'sed -i "s/{{tag}}/$tag_version/g" ./APITemperaturas/k8s/deployment.yaml'
+                        sh 'sed -i "s/{{tag}}/$tag_version/g" ./APITemperaturas/k8s/deployment.yaml'
                         sh 'kubectl apply -f ./APITemperaturas/k8s/deployment.yaml'
                     }
                 }

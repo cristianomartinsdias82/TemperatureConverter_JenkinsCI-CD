@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: webapp
-        image: cristianomartinsdiasspbr1982/temperature-converter:latest
+        image: cristianomartinsdiasspbr1982/temperature-converter:{{tag}}
         ports:
         - containerPort: 3000
           name: http
