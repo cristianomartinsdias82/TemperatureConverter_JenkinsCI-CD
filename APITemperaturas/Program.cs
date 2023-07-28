@@ -9,9 +9,9 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1",
         new OpenApiInfo
         {
-            Title = "Api de conversão de temperaturas V1",
+            Title = "Api de conversão de temperaturas vX",
             Description = "API de conversão de temperaturas implementada com .NET 7 + Minimal APIs entregue de maneira automatizada via CI/CD pipelines utilizando Jenkins",
-            Version = "v1",
+            Version = "vX",
             Contact = new OpenApiContact()
             {
                 Name = "Renato Groffe",
